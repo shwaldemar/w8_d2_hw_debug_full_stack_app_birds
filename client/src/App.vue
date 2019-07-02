@@ -31,8 +31,8 @@ export default {
   methods: {
     fetchData(){
       fetch("http://localhost:3000/api/sightings")
-        .then(res => res.json())
-        .then(sightings => this.sightings = sightings);
+      .then(res => res.json())
+      .then(sightings => this.sightings = sightings);
     }
   }
 }

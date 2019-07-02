@@ -11,17 +11,34 @@
 
 <script>
 import { eventBus } from '../main';
+
+
 export default {
 	name: "sightings-grid",
+	data() {
+		return{
+			sightings:[]
+		}
+	},
 	props: ["sightings"],
 	filters: {
 		format(value){
 			return new Date(value).toLocaleString().substring(0, 10);
 		}
 	},
-	methods: {
+	mounted(){
+	SightingsService.getSightings()
+	.then(sightings => this.sightings = sightings);
 
-	}
+	eventBus.$on('sighting-added', (sighting) => {
+		this.sightings.push(sighting)
+	})
+
+	eventBus.$on('sighting-deleted', (id) => {
+		let index = this.sightings.findIndex(sighting => sighting._id === id)
+		this.sightings.splice(index, 1)
+	})
+}
 }
 </script>
 
